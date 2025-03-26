@@ -1,0 +1,195 @@
+WARM UP EXERCISE
+Project: micro-Reddit
+Course: Ruby on Rails
+The Odin Project
+
+by The Miki 666
+
+--------------------
+
+1. Learning platform
+
+class Lesson:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  title: string [unique, present]
+  body: text [present]
+  course_id: integer [present]
+
+  belongs_to: course
+
+class Course:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  title: string [unique, present]
+  description: text [present]
+
+  has_many: lessons
+  has_many: enrolments
+
+class Enrolment
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  course_id: integer [present]
+  student_id: integer [presente]
+
+  belongs_to: course
+  belongs_to: student
+
+class Student
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  name:string [present]
+  surname: string [present]
+  username: string unique [unique, 4-20 char, present]
+  email: string [unique, present]
+  password: string [8-30 char, present]
+
+  has_many: enrolments
+  
+-----------------
+
+2. Profile tab
+
+class User:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  username: string unique [unique, 4-20 char, present]
+  email: string [unique, present]
+  password: string [8-30 char, present]
+
+  has_one: profiles
+
+class Profile: 
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  user_id: integer [present]
+  city_id: integer [present]
+  age: integer [present, numericality:{only_integer: true, in: 18..130}
+  gender: string [present, inclusion in:{%w(male, female, no_binary)}]
+
+  belongs_to: user
+  belongs_to: city
+
+class City:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  state_id: integer [present]
+  name: string [present]
+
+  has_many: profiles
+  belongs_to: state
+
+
+class State:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  country_id: integer [present]
+  name: string [present]
+
+  has_many: cities
+  belongs_to: country
+  
+class Country:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  name: string [present]
+
+  has_many: states
+
+ -----------------
+
+3. Pin application
+
+class User:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  username: string unique [unique, 4-20 char, present]
+  email: string [unique, present]
+  password: string [8-30 char, present]
+
+  has_many: pins
+  has_many: comments
+
+class Pin:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  url: string [present]
+  description: text
+  user_id: integer [present]
+
+  belongs_to: user
+  has_many: comments
+
+class Comment
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  body: text [present]
+  user_id: integer [present]
+  pin_id: integer [present]
+  
+  belongs_to: pin
+  belongs_to: user
+
+------------------
+
+4. Hacker news
+
+class User:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  username: string unique [unique, 4-20 char, present]
+  email: string [unique, present]
+  password: string [8-30 char, present]
+
+  has_many: links
+  has_many: comments
+
+class Link:
+
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  url: string [present]
+  user_id: integer [present]
+
+  belongs_to: user
+  has_many: comments
+
+class Comment
+  id:integer
+  created_at:datetime
+  updated_at:datetime
+  body: text [present]
+  user_id: integer [present]
+  pin_id: integer 
+  comment_id: integer
+  
+  belongs_to: pin
+  belongs_to: user
+  has_many: comments
+  belongs_to: comment
+
